@@ -1,0 +1,85 @@
+#cell 1
+from google.colab import files
+uploaded = files.upload()
+  
+#cell 2
+import pandas as pd
+df = pd.read_csv('Sample - Superstore.csv', encoding = 'latin1')
+df.head()
+  
+#cell 3
+df.dropna(inplace=True)
+df['orderdate'] = pd.to_datetime(df['Order Date'])
+
+df['year'] = df['orderdate'].dt.year
+df['month'] = df['orderdate'].dt.month
+df.head()
+
+#cell 4
+import plotly.express as px
+
+sales_over_time = df.groupby('orderdate')['Sales'].sum().reset_index()
+
+fig1 = px.line(sales_over_time, x='orderdate', y='Sales',
+                title= 'Revenue over time',
+                markers=True)
+fig1.show()
+
+#cell 5
+product_sales = df.groupby('Sub-Category')['Sales'].sum().reset_index()
+
+product_sales = product_sales.sort_values(by='Sales', ascending=False)
+
+fig2 = px.bar(product_sales, x= 'Sub-Category', y= 'Sales',
+               title = 'product perfomance by sales',
+               text_auto = True)
+fig2.show()
+
+#cell 6
+region_sales = df.groupby('Region')['Sales'].sum().reset_index()
+
+import plotly.express as px
+fig3 = px.pie(region_sales,
+              values='Sales',
+              names='Region',
+              title='Sales Distribution by Region')
+fig3.show()
+
+#cell 7
+# Key Metrics
+total_revenue = df['Sales'].sum()
+total_profit = df['Profit'].sum()
+total_orders = df['Order ID'].nunique()
+avg_profit_per_order = total_profit / total_orders
+
+# Print KPIs
+print("Total Revenue: $", round(total_revenue, 2))
+print("Total Profit: $", round(total_profit, 2))
+print("Total Orders:", total_orders)
+print("Average Profit per Order: $", round(avg_profit_per_order, 2))
+
+#cell 8
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+# Key Metrics
+total_revenue = df['Sales'].sum()
+total_profit = df['Profit'].sum()
+total_orders = df['Order ID'].nunique()
+avg_profit_per_order = total_profit / total_orders
+
+fig = make_subplots(rows=1, cols=4, specs=[[{"type":"indicator"}]*4])
+
+fig.add_trace(go.Indicator(mode="number", value=total_revenue, title={"text":"Total Revenue"}), row=1, col=1)
+fig.add_trace(go.Indicator(mode="number", value=total_profit, title={"text":"Total Profit"}), row=1, col=2)
+fig.add_trace(go.Indicator(mode="number", value=total_orders, title={"text":"Total Orders"}), row=1, col=3)
+fig.add_trace(go.Indicator(mode="number", value=avg_profit_per_order, title={"text":"Avg Profit/Order"}), row=1, col=4)
+fig.update_layout(height=200)
+fig.show()
+
+#cell 9
+
+df.to_excel('Cleaned_Sales_Data.xlsx', index=False)
+
+from google.colab import files
+files.download('Cleaned_Sales_Data.xlsx')
