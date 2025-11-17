@@ -24,4 +24,6 @@ With my clean data, I designed and built the executive dashboard. (My Tableau tr
 * Top 10 Products: Finally, I added a bar chart to show the Top 10 Products by sales, making it easy to see which specific items are the most important revenue drivers.
   
 Project Outcome
-By following this process, I successfully turned a raw dataset into a clean, actionable business dashboard. The final visualization clearly highlights key trends, identifies top-performing regions and products, and provides a clear overview of the company's sales and profitability.<img width="1291" height="848" alt="Superstoresalesproject tablue img" src="https://github.com/user-attachments/assets/3465eb7f-e612-48fa-bd96-c98f574ea463" />
+By following this process, I successfully turned a raw dataset into a clean, actionable business dashboard. The final visualization clearly highlights key trends, identifies top-performing regions and products, and provides a clear overview of the company's sales and profitability.
+
+<img width="1291" height="848" alt="Superstoresalesproject tablue img" src="https://github.com/user-attachments/assets/3465eb7f-e612-48fa-bd96-c98f574ea463" />
